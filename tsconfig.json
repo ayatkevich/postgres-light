@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "checkJs": true,
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "types": ["jest", "node"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}
