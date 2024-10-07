@@ -14,8 +14,10 @@
     "compile": "tsc",
     "test": "jest"
   },
+  "dependencies": {
+    "@electric-sql/pglite": "0.2.10"
+  },
   "devDependencies": {
-    "@electric-sql/pglite": "0.2.10",
     "@jest/globals": "29.7.0",
     "@swc/core": "1.7.28",
     "@swc/jest": "0.2.36",
