@@ -20,4 +20,22 @@ describe("postgres-lite", () => {
       expect(await sql`select (${fragment})`).toEqual([{ "?column?": 1 }]);
     }
   });
+
+  it("should support values", async () => {
+    await _(postgresSql);
+    await _(postgresLiteSql as typeof postgresSql);
+    async function _(sql: typeof postgresSql) {
+      expect(await sql`select ${1}`).toEqual([{ "?column?": "1" }]);
+      expect(await sql`select ${"hello"}`).toEqual([{ "?column?": "hello" }]);
+      expect(await sql`select ${true}::boolean`).toEqual([{ bool: true }]);
+    }
+  });
+
+  it("should act as identifier", async () => {
+    await _(postgresSql);
+    await _(postgresLiteSql as typeof postgresSql);
+    async function _(sql: typeof postgresSql) {
+      await expect(sql`select * from ${sql("pg_class")}`).resolves.toBeTruthy();
+    }
+  });
 });
