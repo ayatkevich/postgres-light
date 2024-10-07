@@ -1,4 +1,5 @@
 import { PGlite } from "@electric-sql/pglite";
+// @ts-ignore
 import { identifier, sql } from "@electric-sql/pglite/template";
 
 export default function postgresLite() {

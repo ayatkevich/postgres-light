@@ -10,7 +10,8 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "declaration": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"]
 }
