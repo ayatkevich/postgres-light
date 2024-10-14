@@ -42,6 +42,14 @@ describe("postgres-lite", () => {
     }
   });
 
+  it("should implement unsafe method", async () => {
+    await _(postgresSql);
+    await _(postgresLiteSql as typeof postgresSql);
+    async function _(sql: typeof postgresSql) {
+      await expect(sql.unsafe(`select * from "pg_class"`)).resolves.toBeTruthy();
+    }
+  });
+
   it("should implement file method", async () => {
     await _(postgresSql);
     await _(postgresLiteSql as typeof postgresSql);

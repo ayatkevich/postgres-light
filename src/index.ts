@@ -34,6 +34,9 @@ export default function postgresLite() {
     const sql = await readFile(path, "utf-8");
     return await pg.exec(sql);
   };
+  sqlFunction.unsafe = (query: string, parameters?: any[]) => {
+    return pg.query(query, parameters);
+  };
 
   return sqlFunction;
 }
