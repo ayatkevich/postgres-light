@@ -1,6 +1,7 @@
 import { PGlite } from "@electric-sql/pglite";
 // @ts-ignore
 import { identifier, sql } from "@electric-sql/pglite/template";
+import { readFile } from "fs/promises";
 
 export default function postgresLite() {
   const pg = new PGlite();
@@ -29,6 +30,10 @@ export default function postgresLite() {
   }
 
   sqlFunction.end = () => pg.close();
+  sqlFunction.file = async (path: string) => {
+    const sql = await readFile(path, "utf-8");
+    return await pg.exec(sql);
+  };
 
   return sqlFunction;
 }

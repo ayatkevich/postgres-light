@@ -1,3 +1,6 @@
+import { writeFile } from "fs/promises";
+import { tmpdir } from "os";
+import { join } from "path";
 import postgres from "postgres";
 import postgresLite from "./index";
 
@@ -36,6 +39,24 @@ describe("postgres-lite", () => {
     await _(postgresLiteSql as typeof postgresSql);
     async function _(sql: typeof postgresSql) {
       await expect(sql`select * from ${sql("pg_class")}`).resolves.toBeTruthy();
+    }
+  });
+
+  it("should implement file method", async () => {
+    await _(postgresSql);
+    await _(postgresLiteSql as typeof postgresSql);
+    async function _(sql: typeof postgresSql) {
+      const path = join(tmpdir(), "test.sql");
+      await writeFile(
+        path,
+        /* sql */ `
+          drop table if exists test_from_file;
+          create table test_from_file ();
+        `,
+        "utf-8"
+      );
+      await sql.file(path);
+      await sql`select * from test_from_file`;
     }
   });
 });
