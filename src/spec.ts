@@ -67,4 +67,15 @@ describe("postgres-lite", () => {
       await sql`select * from test_from_file`;
     }
   });
+
+  it("should implement simple query method", async () => {
+    await _(postgresSql);
+    await _(postgresLiteSql as typeof postgresSql);
+    async function _(sql: typeof postgresSql) {
+      await expect(sql`select 1; select 2;`.simple()).resolves.toEqual([
+        [{ "?column?": 1 }],
+        [{ "?column?": 2 }],
+      ]);
+    }
+  });
 });

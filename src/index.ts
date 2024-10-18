@@ -1,6 +1,6 @@
 import { PGlite } from "@electric-sql/pglite";
 // @ts-ignore
-import { identifier, sql } from "@electric-sql/pglite/template";
+import { identifier, query, sql } from "@electric-sql/pglite/template";
 import { readFile } from "fs/promises";
 
 export default function postgresLite() {
@@ -25,6 +25,11 @@ export default function postgresLite() {
         .sql(...args)
         .then(({ rows }) => resolve(rows as T))
         .catch(reject);
+
+    template.simple = async () => {
+      const result = await pg.exec(query(...args).query);
+      return result.map(({ rows }) => rows);
+    };
 
     return template;
   }
